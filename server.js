@@ -39,8 +39,8 @@ app.post("/execute", express.raw({ type: "*/*", limit: "256kb" }), async (req, r
   // Extract only the signed agentId scalar without JSON.parse, so signature
   // verification happens against the untouched raw bytes before parsing.
   const rawText = rawBody.toString("utf8");
-  const idMatch = rawText.match(/"agentId"\\s*:\\s*(\\d+)/);
-  const agentId = idMatch ? Number(idMatch[1]) : NaN;
+const idMatch = rawText.match(/"agentId"\s*:\s*(\d+)/);
+const agentId = idMatch ? Number(idMatch[1]) : NaN;
   if (!Number.isSafeInteger(agentId) || agentId < 1) return res.status(400).json({ error: "invalid_agent_id" });
 
   const verified = verifyPabalRequest({
